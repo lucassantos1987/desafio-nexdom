@@ -8,6 +8,12 @@ import { ref, onMounted } from 'vue';
 const produtos = ref<Produto[]>([])
 const filtroDescricao = ref<string>('');
 const filtroTipoProduto = ref<string>('');
+const editarCadastro = ref<boolean>(false);
+
+const descricao = ref<string>('');
+const tipoProduto = ref<string>('');
+const valorFornecedor = ref<number>(0);
+const quantidadeEstoque = ref<number>(0);
 
 function handleInput(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -39,22 +45,42 @@ function consultar() {
   listarProdutos();
 }
 
-function limpar() {
-  console.log("Limpar");
-
-  console.log(filtroDescricao.value);
-  console.log(filtroTipoProduto.value);
+function limparcamposFiltros() {
+  filtroDescricao.value = "";
+  filtroTipoProduto.value = "";
 }
 
-function editar() {
-  console.log("Editar")
+function limparCamposCadastro() {
+  descricao.value = "";
+  tipoProduto.value = "";
+  valorFornecedor.value = 0.00;
+  quantidadeEstoque.value = 0;
+}
+
+function novoCadastro() {
+  editarCadastro.value = false;
+  limparCamposCadastro();
+}
+
+function editar(produto: Produto) {
+  editarCadastro.value = true;
+  descricao.value = produto.descricao;
+  tipoProduto.value = produto.tipoProduto;
+  valorFornecedor.value = produto.valorFornecedor;
+  quantidadeEstoque.value = produto.quantidadeEstoque;
+}
+
+async function salvar(e: { preventDefault: () => void }) {
+  e.preventDefault();
+}
+
+function cancelar(e: { preventDefault: () => void }) {
+  e.preventDefault();
+  editarCadastro.value = false;
+  limparCamposCadastro();
 }
 
 async function excluir(codigo: number) {
-
-  /*const data = {
-    codigo: codigo
-  };*/
 
   await api.delete(`produto/excluir/${codigo}`, {
     params: {
@@ -82,11 +108,21 @@ onMounted(() => {
   <div class="flex flex-col justify-center p-4 mt-8">
     <h1 class="text-4xl font-bold">Cadastro de Produto</h1>
 
-    <CadastroProdutoForm />
+    <CadastroProdutoForm
+      :descricao="descricao"
+      :tipoProduto="tipoProduto"
+      :valorFornecedor="valorFornecedor"
+      :quantidadeEstoque="quantidadeEstoque"
+      :handleInput="handleInput"
+      :optionChange="optionChange"
+      :novo="novoCadastro"
+      :salvar="salvar"
+      :cancelar="cancelar"/>
+
     <CadastroProdutoTabela
       :produtos="produtos"
       :consultar="consultar"
-      :limpar="limpar"
+      :limpar="limparcamposFiltros"
       :editar="editar"
       :excluir="excluir"
       :descricao="filtroDescricao"

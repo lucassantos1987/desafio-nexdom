@@ -5,7 +5,7 @@ defineProps<{
   produtos: Produto[];
   consultar: () => void;
   limpar: () => void;
-  editar: () => void;
+  editar: (produto: Produto) => void;
   excluir: (codigo: number) => void;
   descricao: string;
   tipoProduto: string;
@@ -27,7 +27,7 @@ defineProps<{
             type="text"
             id="descricao"
             name="descricao"
-            :model="descricao"
+            :value="descricao"
             @input="handleInput"
             class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
             placeholder="DESCRIÇÃO DO PRODUTO"/>
@@ -40,7 +40,7 @@ defineProps<{
             id="tipoProduto"
             name="tipoProduto"
             class="w-full outline-0 text-gray-900"
-            :model="tipoProduto"
+            :value="tipoProduto"
             @change="optionChange">
             <option value="">SELECIONE O TIPO DO PRODUTO</option>
             <option value="ELETRÔNICO">ELETRÔNICO</option>
@@ -89,7 +89,7 @@ defineProps<{
              }}</th>
             <th align="center">
               <button
-                @click="editar()"
+                @click="editar(produto)"
                 class="w-full h-10 bg-emerald-600 hover:bg-emerald-700 transition-colors duration-300 text-white rounded-[8px] cursor-pointer">
                 Editar
               </button>
