@@ -21,10 +21,10 @@
         focus-within:border-gray-600focus-within:bg-gray-200">
 
         <select id="tipoProduto" name="tipoProduto" class="outline-0 w-full text-gray-900">
-          <option value="0">SELECIONE O TIPO DO PRODUTO</option>
-          <option value="1">ELETÔNICO</option>
-          <option value="2">ELETRODOMÉSTICO</option>
-          <option value="3">MÓVEL</option>
+          <option value="">SELECIONE O TIPO DO PRODUTO</option>
+          <option value="ELETÔNICO">ELETÔNICO</option>
+          <option value="ELETRODOMÉSTICO">ELETRODOMÉSTICO</option>
+          <option value="MÓVEL">MÓVEL</option>
         </select>
     </div>
 

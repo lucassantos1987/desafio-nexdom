@@ -9,7 +9,8 @@ defineProps<{
   excluir: () => void;
   descricao: string;
   tipoProduto: string;
-  handleInput: (e: Event) => void
+  handleInput: (e: Event) => void;
+  optionChange: (e: Event) => void;
 }>()
 
 </script>
@@ -39,11 +40,12 @@ defineProps<{
             id="tipoProduto"
             name="tipoProduto"
             class="w-full outline-0 text-gray-900"
-            :model="tipoProduto">
-            <option value="0">SELECIONE O TIPO DO PRODUTO</option>
-            <option value="1">ELETÔNICO</option>
-            <option value="2">ELETRODOMÉSTICO</option>
-            <option value="3">MÓVEL</option>
+            :model="tipoProduto"
+            @change="optionChange">
+            <option value="">SELECIONE O TIPO DO PRODUTO</option>
+            <option value="ELETÔNICO">ELETÔNICO</option>
+            <option value="ELETRODOMÉSTICO">ELETRODOMÉSTICO</option>
+            <option value="MÓVEL">MÓVEL</option>
           </select>
         </div>
       </div>

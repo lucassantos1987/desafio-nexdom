@@ -25,7 +25,7 @@ public class Produto {
     private String descricao;
     
     @Column(nullable = false)
-    private int tipoProduto;
+    private String tipoProduto;
     
     @Column(nullable = false, precision = 10, scale =  2)
     private BigDecimal valorFornecedor;
@@ -38,7 +38,7 @@ public class Produto {
 
     public Produto () {}
 
-    public Produto(String descricao, int tipoProduto, BigDecimal valorFornecedor, BigDecimal quantidadeEstoque) {
+    public Produto(String descricao, String tipoProduto, BigDecimal valorFornecedor, BigDecimal quantidadeEstoque) {
         this.descricao = descricao;
         this.tipoProduto = tipoProduto;
         this.valorFornecedor = valorFornecedor;
@@ -57,11 +57,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public int getTipoProduto() {
+    public String getTipoProduto() {
         return tipoProduto;
     }
 
-    public void setTipoProduto(int tipoProduto) {
+    public void setTipoProduto(String tipoProduto) {
         this.tipoProduto = tipoProduto;
     }
     

@@ -1,11 +1,13 @@
 package com.desafio.nexdom.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.desafio.nexdom.server.enums.TipoProduto;
 import com.desafio.nexdom.server.exceptions.RecursoNaoEncontradoException;
 import com.desafio.nexdom.server.model.Produto;
 import com.desafio.nexdom.server.repository.ProdutoRepository;
@@ -18,9 +20,28 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public List<Produto> listarProduto() {
+    public List<Produto> listarProduto(String descricao, String tipoProduto) {
         try {
-            return produtoRepository.findAll();
+
+            List<Produto> produto = new ArrayList<>();
+
+            if (descricao.trim().isEmpty() && tipoProduto.trim().isEmpty()) {
+                produto = produtoRepository.findAll();
+            }
+
+            if (!descricao.trim().isEmpty() && tipoProduto.trim().isEmpty()) {
+                produto = produtoRepository.findByDescricaoLike(descricao);
+            }
+
+            if (descricao.trim().isEmpty() && !tipoProduto.trim().isEmpty()) {
+                produto = produtoRepository.findByTipoProduto(tipoProduto);
+            } 
+
+            if (!descricao.trim().isEmpty() && !tipoProduto.trim().isEmpty()) {
+                produto = produtoRepository.findByDescricaoLikeAndTipoProduto(descricao, tipoProduto);
+            }
+
+            return produto;
         } catch (Exception ex) {
             throw ex;
         }        
@@ -37,7 +58,7 @@ public class ProdutoService {
 
     public List<Produto> listarProdutoPorDescricao(String descricao) {
         try {
-            return produtoRepository.findByDescricao(descricao);
+            return produtoRepository.findByDescricaoLike(descricao);
         } catch (Exception ex) {
             throw ex;
         }
@@ -46,6 +67,14 @@ public class ProdutoService {
     @Transactional
     public Produto salvarProduto(Produto produto) {
         try {
+
+            if (!produto.getTipoProduto().equals(TipoProduto.ELETRONICO.getDescricao())
+            && !produto.getTipoProduto().equals(TipoProduto.ELETRODOMESTICO.getDescricao())
+            && !produto.getTipoProduto().equals(TipoProduto.MOVEL.getDescricao())) {
+
+                throw new RecursoNaoEncontradoException("Tipo do produto inválido.");
+            }
+
             return produtoRepository.save(produto);
         } catch (Exception ex) {
             throw ex;
@@ -72,9 +101,12 @@ public class ProdutoService {
     }
 
     @Transactional
-    public void deletarProduto(Long id) {
+    public void deletarProduto(Long codigo) {
         try {
-            produtoRepository.deleteById(id);
+        if (!produtoRepository.existsById(codigo)) {
+            throw new RecursoNaoEncontradoException("Produto com ID " + codigo + " não encontrado");
+        }            
+            produtoRepository.deleteById(codigo);
         } catch (Exception ex) {
             throw ex;
         } 

@@ -11,29 +11,18 @@ const filtroTipoProduto = ref<string>('');
 
 async function listarProdutos() {
 
-  if (filtroDescricao.value.trim() !== '' || Number(filtroTipoProduto) > 0) {
-    await api.get("produto", {
-      params: {
-        descricao: filtroDescricao.value.toUpperCase,
-        tipoProduto: Number(filtroTipoProduto)
-      }
-    })
-    .then((response) => {
-      produtos.value = response.data
-    })
-    .catch((error) => {
-      console.error("Erro no retorno dos produtos: ", error);
-    })
-  } else {
-
-    await api.get("produto")
-    .then((response) => {
-      produtos.value = response.data
-    })
-    .catch((error) => {
-      console.error("Erro no retorno dos produtos: ", error);
-    })
-  }
+  await api.get("produto", {
+    params: {
+      descricao: filtroDescricao.value.trim().toUpperCase(),
+      tipoProduto: filtroTipoProduto.value.trim()
+    }
+  })
+  .then((response) => {
+    produtos.value = response.data
+  })
+  .catch((error) => {
+    console.error("Erro no retorno dos produtos: ", error);
+  })
 }
 
  function handleInput(event: Event) {
@@ -41,15 +30,20 @@ async function listarProdutos() {
     filtroDescricao.value = input.value;
 }
 
+function optionChange(event: Event) {
+  const select = event.target as HTMLSelectElement;
+  filtroTipoProduto.value = select.value;
+}
+
 function consultar() {
   listarProdutos();
 }
 
-
-
 function limpar() {
   console.log("Limpar");
-  console.log(filtroDescricao.value)
+
+  console.log(filtroDescricao.value);
+  console.log(filtroTipoProduto.value);
 }
 
 function editar() {
@@ -80,6 +74,7 @@ onMounted(() => {
       :excluir="excluir"
       :descricao="filtroDescricao"
       :tipo-produto="filtroTipoProduto"
-      :handleInput="handleInput"/>
+      :handleInput="handleInput"
+      :optionChange="optionChange"/>
   </div>
 </template>

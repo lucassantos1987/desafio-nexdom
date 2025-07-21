@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.nexdom.server.model.Produto;
@@ -27,8 +28,8 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @GetMapping
-    public List<Produto> listarProduto() {                
-        return produtoService.listarProduto();
+    public List<Produto> listarProduto(@RequestParam String descricao, @RequestParam String tipoProduto) {
+        return produtoService.listarProduto(descricao, tipoProduto);
     }
 
     @GetMapping("/{codigo}")
