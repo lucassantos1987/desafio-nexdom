@@ -6,7 +6,7 @@ defineProps<{
   consultar: () => void;
   limpar: () => void;
   editar: () => void;
-  excluir: () => void;
+  excluir: (codigo: number) => void;
   descricao: string;
   tipoProduto: string;
   handleInput: (e: Event) => void;
@@ -43,7 +43,7 @@ defineProps<{
             :model="tipoProduto"
             @change="optionChange">
             <option value="">SELECIONE O TIPO DO PRODUTO</option>
-            <option value="ELETÔNICO">ELETÔNICO</option>
+            <option value="ELETRÔNICO">ELETRÔNICO</option>
             <option value="ELETRODOMÉSTICO">ELETRODOMÉSTICO</option>
             <option value="MÓVEL">MÓVEL</option>
           </select>
@@ -96,7 +96,7 @@ defineProps<{
             </th>
             <th align="center">
               <button
-                @click="excluir()"
+                @click="excluir(produto.codigo)"
                 class="w-full h-10 bg-emerald-600 hover:bg-emerald-700 transition-colors duration-300 text-white rounded-[8px] cursor-pointer">
                 Excluir
               </button>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.desafio.nexdom.server.model.Produto;
 import com.desafio.nexdom.server.service.ProdutoService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,11 @@ public class ProdutoController {
         return produtoService.listarProduto(descricao, tipoProduto);
     }
 
+    @GetMapping("/listar")
+    public List<Produto> listarProduto() {
+        return produtoService.listarProduto("", "");
+    }
+
     @GetMapping("/{codigo}")
     public ResponseEntity<Produto> listarProdutoPorCodigo(@PathVariable Long codigo) {
         return produtoService.listarProdutoPorCodigo(codigo)
@@ -49,8 +55,8 @@ public class ProdutoController {
 
         return produtoService.alterarProduto(produto);
     }
-    @DeleteMapping("/{codigo}")
-    public ResponseEntity<Void> deletarProduto(@PathVariable Long codigo) {
+    @DeleteMapping("excluir/{codigo}")
+    public ResponseEntity<?> deletarProduto(@PathVariable Long codigo) {
         produtoService.deletarProduto(codigo);
         return ResponseEntity.noContent().build();
     }

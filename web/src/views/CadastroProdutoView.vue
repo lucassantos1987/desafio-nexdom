@@ -9,6 +9,16 @@ const produtos = ref<Produto[]>([])
 const filtroDescricao = ref<string>('');
 const filtroTipoProduto = ref<string>('');
 
+function handleInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    filtroDescricao.value = input.value;
+}
+
+function optionChange(event: Event) {
+  const select = event.target as HTMLSelectElement;
+  filtroTipoProduto.value = select.value;
+}
+
 async function listarProdutos() {
 
   await api.get("produto", {
@@ -21,18 +31,8 @@ async function listarProdutos() {
     produtos.value = response.data
   })
   .catch((error) => {
-    console.error("Erro no retorno dos produtos: ", error);
+    console.error("Erro no retorno dos produtos: ", error.message);
   })
-}
-
- function handleInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    filtroDescricao.value = input.value;
-}
-
-function optionChange(event: Event) {
-  const select = event.target as HTMLSelectElement;
-  filtroTipoProduto.value = select.value;
 }
 
 function consultar() {
@@ -50,8 +50,25 @@ function editar() {
   console.log("Editar")
 }
 
-function excluir() {
-  console.log("Excluir")
+async function excluir(codigo: number) {
+
+  /*const data = {
+    codigo: codigo
+  };*/
+
+  await api.delete(`produto/excluir/${codigo}`, {
+    params: {
+      codigo: codigo
+    }
+  })
+  .then(() => {
+    console.log("Registro excluído com sucesso.")
+  })
+  .catch((error) => [
+    console.error(`Erro: ${error.message}`)
+  ])
+
+  listarProdutos();
 }
 
 
