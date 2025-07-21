@@ -6,7 +6,7 @@
     </button>
   </div>
   <form class="mt-4 space-y-3">
-    <div class="g-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
+    <div class="bg-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
         focus-within:border-gray-600focus-within:bg-gray-200">
 
         <input
@@ -17,7 +17,7 @@
           placeholder="DESCRIÇÃO DO PRODUTO"/>
     </div>
 
-    <div class="g-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
+    <div class="bg-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
         focus-within:border-gray-600focus-within:bg-gray-200">
 
         <select id="tipoProduto" name="tipoProduto" class="outline-0 w-full text-gray-900">
