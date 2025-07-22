@@ -5,25 +5,33 @@ import java.sql.Date;
 
 public class MovimentoEstoqueDTO {
 
+    private Long codigo;
     private Long codigoProduto;
     private String descricaoProduto;
     private String tipoMovimentoEstoque;
     private int quantidadeMovimentada;
+    private int estoqueAnterior;
     private int estoqueDisponivel;
     private BigDecimal valorVenda;
     private Date dataVenda;
 
     public MovimentoEstoqueDTO() {}
 
-    public MovimentoEstoqueDTO(Long codigoProduto, String descricaoProduto, String tipoMovimentoEstoque,
-        int quantidadeMovimentada, int estoqueDisponivel, BigDecimal valorVenda, Date dataVenda) {
+    public MovimentoEstoqueDTO(Long codigo, Long codigoProduto, String descricaoProduto, String tipoMovimentoEstoque,
+        int quantidadeMovimentada, int estoqueAnterior, int estoqueDisponivel, BigDecimal valorVenda, Date dataVenda) {
+            this.codigo = codigo;
             this.codigoProduto = codigoProduto;
             this.descricaoProduto = descricaoProduto;
             this.tipoMovimentoEstoque = tipoMovimentoEstoque;
             this.quantidadeMovimentada = quantidadeMovimentada;
+            this.estoqueAnterior = estoqueAnterior;
             this.estoqueDisponivel = estoqueDisponivel;
             this.valorVenda = valorVenda;
             this.dataVenda = dataVenda;
+    }
+
+    public Long getCodigo() {
+        return codigo;
     }
 
     public Long getCodigoProduto() {
@@ -40,6 +48,10 @@ public class MovimentoEstoqueDTO {
 
     public int getQuantidadeMovimentada() {
         return quantidadeMovimentada;
+    }
+
+    public int getEstoqueAnterior() {
+        return estoqueAnterior;
     }
 
     public int getEstoqueDisponivel() {

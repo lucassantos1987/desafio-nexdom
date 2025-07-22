@@ -49,6 +49,9 @@ public class MovimentoEstoqueService {
             int quantidadeEstoqueAtual = produtoRepository.getQuantidadeEstoque(movimentoEstoque.getProduto().getCodigo());
             int quantidadeEstoqueNovo = calcularEstoqueService.calcularEstoque(quantidadeEstoqueAtual, movimentoEstoque.getQuantidadeMovimentada(), movimentoEstoque.getTipoMovimentacao());
 
+            movimentoEstoque.setEstoqueAnterior(quantidadeEstoqueAtual);
+            movimentoEstoque.setEstoqueDisponivel(quantidadeEstoqueNovo);
+
             produtoRepository.updateQuantidadeEstoque(quantidadeEstoqueNovo, movimentoEstoque.getProduto().getCodigo());
 
             return movimentoEstoqueRepository.save(movimentoEstoque);

@@ -2,6 +2,7 @@
 import MovimentacaoEstoqueForm from '@/components/movimentacao_estoque/MovimentacaoEstoqueForm.vue';
 import MovimentacaoEstoqueTabela from '@/components/movimentacao_estoque/MovimentacaoEstoqueTabela.vue';
 import api from '@/http/api';
+import type { MovimentacaoEstoque } from '@/types/movimentacao-estoque';
 
 import type Produto from '@/types/produto';
 import { onMounted, ref } from 'vue';
@@ -15,8 +16,9 @@ const quantidadeMovimentada = ref<number>(0);
 const filtroProduto = ref<string>('');
 const filtroTipoMovimentacao = ref<string>('');
 
-async function listarProdutos() {
+const movimentacaoEstoque = ref<MovimentacaoEstoque[]>([]);
 
+async function listarProdutos() {
   await api.get("produto", {
     params: {
       descricao: "",
@@ -64,7 +66,15 @@ function handleInputQuantidadeMovimentada(event: Event) {
   quantidadeMovimentada.value = Number(input.value);
 }
 
-function consultar() {}
+async function consultar() {
+  await api.get("movimentacao_estoque")
+  .then((response) => {
+    movimentacaoEstoque.value = response.data;
+  })
+  .catch((error) => {
+    console.error(`Erro na consulta: ${error.message}`);
+  })
+}
 
 function limparCamposFiltros() {
   filtroProduto.value = "";
@@ -90,6 +100,8 @@ function optionChangeFiltroTipoMovimentacao(event: Event) {
 
 onMounted(() => {
   listarProdutos();
+  consultar();
+
 })
 
 </script>
@@ -120,6 +132,7 @@ onMounted(() => {
       :optionChangeFiltroProduto="optionChangeFiltroProduto"
       :optionChangeFiltroTipoMovimentacao="optionChangeFiltroTipoMovimentacao"
       :produtos="produtos"
+      :movimentacaoEstoque="movimentacaoEstoque"
     />
 
   </div>

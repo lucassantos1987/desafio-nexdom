@@ -70,7 +70,7 @@ defineProps<{
       <table class="w-full">
         <thead>
           <tr class="bg-emerald-600 h-[60px] text-white ">
-            <th align="center">Código</th>
+            <th class="pl-2" align="left">Código</th>
             <th align="left">Descrição</th>
             <th align="left">Tipo Do Produto</th>
             <th align="right">Valor Do Fornecedor</th>
@@ -80,8 +80,8 @@ defineProps<{
           </tr>
         </thead>
         <tbody v-for="produto in produtos" :key="produto.codigo">
-          <tr>
-            <th class="font-light" align="center">{{ produto.codigo }}</th>
+          <tr class="h-[40px] border-b-1 border-b-gray-400">
+            <th class="pl-2 font-light" align="left">{{ produto.codigo }}</th>
             <th class="font-light" align="left">{{ produto.descricao }}</th>
             <th class="font-light" align="left">{{ produto.tipoProduto }}</th>
             <th class="font-light" align="right">{{ produto.valorFornecedor }}</th>
@@ -104,6 +104,7 @@ defineProps<{
           </tr>
         </tbody>
         <span v-if="produtos.length === 0">SEM REGISTRO(S)</span>
+        <span class="font-semibold" v-else>Total.: {{ produtos.length }} REGISTRO(S)</span>
       </table>
     </div>
   </div>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { MovimentacaoEstoque } from '@/types/movimentacao-estoque';
 import type Produto from '@/types/produto';
 
 defineProps<{
@@ -9,6 +10,7 @@ defineProps<{
   optionChangeFiltroProduto: (e: Event) => void;
   optionChangeFiltroTipoMovimentacao: (e: Event) => void;
   produtos: Produto[];
+  movimentacaoEstoque: MovimentacaoEstoque[];
 }>()
 </script>
 
@@ -71,11 +73,26 @@ defineProps<{
             <th align="left" class="pl-2">Produto</th>
             <th align="left">Tipo Movimentação</th>
             <th align="right">Quantidade Movimentada</th>
+            <th align="right">Estoque Anterior</th>
             <th align="right">Estoque Disponível</th>
             <th align="right">Valor Venda</th>
             <th align="left" class="pl-8">Data Venda</th>
           </tr>
         </thead>
+
+        <tbody v-for="estoque in movimentacaoEstoque" :key="estoque.codigo">
+          <tr class="h-[40px] border-b-1 border-b-gray-400">
+            <th class="font-light pl-2" align="left">{{ estoque.codigoProduto }} - {{ estoque.descricaoProduto }}</th>
+            <th class="font-light" align="left">{{ estoque.tipoMovimentoEstoque }}</th>
+            <th class="font-light" align="right">{{ estoque.quantidadeMovimentada }}</th>
+            <th class="font-light" align="right">{{ estoque.estoqueAnterior }}</th>
+            <th class="font-light" align="right">{{ estoque.estoqueDisponivel }}</th>
+            <th class="font-light" align="right">{{ estoque.valorVenda }}</th>
+            <th class="font-light pl-8" align="left">{{ estoque.dataVenda }}</th>
+          </tr>
+        </tbody>
+          <span v-if="movimentacaoEstoque.length === 0">SEM REGISTRO(S)</span>
+          <span class="font-semibold" v-else>Total.: {{ movimentacaoEstoque.length }} REGISTRO(S)</span>
       </table>
     </div>
   </div>

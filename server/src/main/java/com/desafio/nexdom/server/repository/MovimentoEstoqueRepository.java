@@ -13,9 +13,9 @@ import com.desafio.nexdom.server.model.MovimentoEstoque;
 public interface MovimentoEstoqueRepository extends JpaRepository<MovimentoEstoque, Long> {
         
     @Query("SELECT new com.desafio.nexdom.server.dto.MovimentoEstoqueDTO(" + //
-    "p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " + //
+    "me.codigo, p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " + //
     "me.tipoMovimentacao AS tipoMovimentoEstoque, me.quantidadeMovimentada, " + //
-    "p.quantidadeEstoque AS estoqueDisponivel, me.valorVenda, me.dataVenda) " + //
+    "me.estoqueAnterior, me.estoqueDisponivel, me.valorVenda, me.dataVenda) " + //
     "FROM MovimentoEstoque me " + //
     "INNER JOIN Produto p ON p.codigo = me.produto.codigo")
     public List<MovimentoEstoqueDTO> listarMovimentacaoEstoque();

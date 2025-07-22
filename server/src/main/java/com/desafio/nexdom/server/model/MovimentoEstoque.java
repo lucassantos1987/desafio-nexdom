@@ -26,15 +26,21 @@ public class MovimentoEstoque {
     @Column(nullable = false)
     private String tipoMovimentacao;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false)
     private BigDecimal valorVenda;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Date dataVenda;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false)
     private int quantidadeMovimentada;
+
+    @Column(nullable = false)
+    private int estoqueAnterior;
+
+    @Column(nullable = false)
+    private int estoqueDisponivel;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_produto")
@@ -42,11 +48,14 @@ public class MovimentoEstoque {
 
     public MovimentoEstoque() {}
 
-    public MovimentoEstoque(Produto produto, String tipoMovimentacao, BigDecimal valorVenda, Date dataVenda, int quantidadeMovimentada) {
+    public MovimentoEstoque(Produto produto, String tipoMovimentacao, BigDecimal valorVenda, Date dataVenda, 
+        int quantidadeMovimentada, int estoqueAnterior, int estoqueDisponivel) {
         this.produto = produto;
         this.tipoMovimentacao = tipoMovimentacao;
         this.valorVenda = valorVenda;
         this.quantidadeMovimentada = quantidadeMovimentada;
+        this.estoqueAnterior = estoqueAnterior;
+        this.estoqueDisponivel = estoqueDisponivel;
     }
 
     public Long getCodigo() {
@@ -91,6 +100,22 @@ public class MovimentoEstoque {
 
     public void setQuantidadeMovimentada(int quantidadeMovimentada) {
         this.quantidadeMovimentada = quantidadeMovimentada;
+    }
+
+    public int getEstoqueAnterior() {
+        return estoqueAnterior;
+    }
+
+    public void setEstoqueAnterior(int estoqueAnterior) {
+        this.estoqueAnterior = estoqueAnterior;
+    }
+
+    public int getEstoqueDisponivel() {
+        return estoqueDisponivel;
+    }
+
+    public void setEstoqueDisponivel(int estoqueDisponivel) {
+        this.estoqueDisponivel = estoqueDisponivel;
     }
 
 }
