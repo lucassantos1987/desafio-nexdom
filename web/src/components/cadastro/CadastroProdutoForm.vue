@@ -2,7 +2,7 @@
 defineProps<{
   descricao: string;
   tipoProduto: string;
-  valorFornecedor: number;
+  valorFornecedor: string;
   handleInputDescricao: (e: Event) => void;
   optionChangeTipoProduto: (e: Event) => void;
   handleInputValorFornecedor: (e: Event) => void;

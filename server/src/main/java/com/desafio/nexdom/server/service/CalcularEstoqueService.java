@@ -2,7 +2,7 @@ package com.desafio.nexdom.server.service;
 
 import org.springframework.stereotype.Service;
 
-import com.desafio.nexdom.server.exceptions.QuantidadeInvalidaException;
+import com.desafio.nexdom.server.exceptions.ValorNumericoInvalidoException;
 
 @Service
 public class CalcularEstoqueService {
@@ -22,7 +22,7 @@ public class CalcularEstoqueService {
             }
 
             if (quantidadeRetornada < 0) {
-                throw new QuantidadeInvalidaException("Saldo insuficiente");
+                throw new ValorNumericoInvalidoException("Saldo insuficiente");
             }
 
             return quantidadeRetornada;

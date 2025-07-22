@@ -45,6 +45,14 @@ public class Produto {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
+    public Produto(Long codigo, String descricao, String tipoProduto, BigDecimal valorFornecedor, int quantidadeEstoque) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.tipoProduto = tipoProduto;
+        this.valorFornecedor = valorFornecedor;
+        this.quantidadeEstoque = quantidadeEstoque;
+    }
+
     public Long getCodigo() {
         return codigo;
     }

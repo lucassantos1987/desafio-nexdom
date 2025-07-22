@@ -8,15 +8,22 @@ import type Produto from '@/types/produto';
 import { onMounted, ref } from 'vue';
 
 const produtos = ref<Produto[]>([]);
-const produto = ref<string>('');
+const codigoProduto = ref<string>('0');
 const tipoMovimentacao = ref<string>('');
-const valorVenda = ref<number>(0);
-const quantidadeMovimentada = ref<number>(0);
+const valorVenda = ref<string>('');
+const quantidadeMovimentada = ref<string>('');
 
 const filtroProduto = ref<string>('');
 const filtroTipoMovimentacao = ref<string>('');
 
 const movimentacaoEstoque = ref<MovimentacaoEstoque[]>([]);
+const produtoObj = ref<Produto>({
+  codigo: 0,
+  descricao: '',
+  tipoProduto: '',
+  valorFornecedor: 0,
+  quantidadeEstoque: 0
+});
 
 async function listarProdutos() {
   await api.get("produto", {
@@ -37,8 +44,54 @@ function novo() {
   limparCamposCadastro();
 }
 
-function salvar(e: { preventDefault: () => void }) {
+async function salvar(e: { preventDefault: () => void }) {
   e.preventDefault();
+
+  if (Number(codigoProduto.value.trim()) === 0) {
+    return alert("Selecione o produto");
+  }
+
+  if (tipoMovimentacao.value.trim() === "") {
+    return alert("Selecione o Tipo de Movimentação");
+  }
+
+  if (quantidadeMovimentada.value.trim() === "" || Number(quantidadeMovimentada.value) <= 0) {
+    return alert("Quantidade dever ser maior que zero.");
+  }
+
+  if (valorVenda.value.trim() === "" || Number(valorVenda.value) <= 0) {
+    return alert("Valor de venda dever ser maior que zero.");
+  }
+
+  produtoObj.value = {
+    codigo: Number(codigoProduto.value),
+    descricao: "",
+    tipoProduto: "",
+    valorFornecedor: 0,
+    quantidadeEstoque: 0,
+  }
+
+  const produtoStr = JSON.stringify(produtoObj.value);
+  const produto = JSON.parse(produtoStr);
+
+  const data = {
+    tipoMovimentacao: tipoMovimentacao.value,
+    valorVenda: Number(valorVenda.value),
+    quantidadeMovimentada: Number(quantidadeMovimentada.value),
+    produto
+  }
+
+  console.log(data);
+
+  await api.post("movimentacao_estoque", data)
+  .then((response) => {
+    if (response.data.codigo > 0) {
+      alert("Movimentação gravada com sucesso.")
+    }
+  })
+  .catch((error) => {
+    console.error(`Erro na Movimentação de Estoque ${error.message}`);
+  })
 }
 
 function cancelar(e: { preventDefault: () => void }) {
@@ -48,7 +101,7 @@ function cancelar(e: { preventDefault: () => void }) {
 
 function optionChangeProduto(event: Event) {
   const select = event.target as HTMLSelectElement;
-  produto.value = select.value;
+  codigoProduto.value = select.value;
 }
 
 function optionChangeTipoMovimentacao(event: Event) {
@@ -58,12 +111,12 @@ function optionChangeTipoMovimentacao(event: Event) {
 
 function handleInputValorVenda(event: Event) {
   const input = event.target as HTMLInputElement;
-  valorVenda.value = Number(input.value);
+  valorVenda.value = input.value;
 }
 
 function handleInputQuantidadeMovimentada(event: Event) {
   const input = event.target as HTMLInputElement;
-  quantidadeMovimentada.value = Number(input.value);
+  quantidadeMovimentada.value = input.value;
 }
 
 async function consultar() {
@@ -82,10 +135,10 @@ function limparCamposFiltros() {
 }
 
 function limparCamposCadastro() {
-  produto.value = "";
+  codigoProduto.value = "";
   tipoMovimentacao.value = "";
-  valorVenda.value = 0.00;
-  quantidadeMovimentada.value = 0;
+  valorVenda.value = "";
+  quantidadeMovimentada.value = "";
 }
 
 function optionChangeFiltroProduto(event: Event) {
@@ -101,7 +154,6 @@ function optionChangeFiltroTipoMovimentacao(event: Event) {
 onMounted(() => {
   listarProdutos();
   consultar();
-
 })
 
 </script>
@@ -114,7 +166,7 @@ onMounted(() => {
       :novo="novo"
       :salvar="salvar"
       :cancelar="cancelar"
-      :produto="produto"
+      :produto="codigoProduto"
       :tipoMovimentacao="tipoMovimentacao"
       :valorVenda="valorVenda"
       :quantidadeMovimentada="quantidadeMovimentada"

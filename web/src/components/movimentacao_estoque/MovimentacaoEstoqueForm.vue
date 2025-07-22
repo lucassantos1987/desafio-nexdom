@@ -7,8 +7,8 @@ defineProps<{
   cancelar: (e: { preventDefault: () => void }) => void;
   produto: string;
   tipoMovimentacao: string;
-  valorVenda: number;
-  quantidadeMovimentada: number;
+  valorVenda: string;
+  quantidadeMovimentada: string;
   optionChangeProduto: (e: Event) => void;
   optionChangeTipoMovimentacao: (e: Event) => void;
   handleInputValorVenda: (e: Event) => void;
@@ -36,7 +36,7 @@ defineProps<{
         :value="produto"
         @change="optionChangeProduto"
         class="outline-0 w-full text-gray-900">
-        <option value="">SELECIONE O PRODUTO</option>
+        <option value="0">SELECIONE O PRODUTO</option>
 
         <option v-for="produto in produtos" :value="produto.codigo" :key="produto.codigo">
           {{ produto.descricao }} - {{ produto.tipoProduto }}

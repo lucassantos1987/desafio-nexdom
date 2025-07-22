@@ -1,5 +1,6 @@
 package com.desafio.nexdom.server.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,10 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Transactional
     @Query("UPDATE Produto p SET p.quantidadeEstoque = :quantidadeEstoque WHERE p.codigo = :codigo")
     public void updateQuantidadeEstoque(@Param("quantidadeEstoque") int quantidadeEstoque, @Param("codigo") Long codigo);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Produto p SET p.valorFornecedor = :valorFornecedor WHERE p.codigo = :codigo")
+    public void updateValorForncedor(@Param("valorFornecedor") BigDecimal valorFornecedor, @Param("codigo") Long codigo);
+
 }

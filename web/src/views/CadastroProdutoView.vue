@@ -14,7 +14,7 @@ const editarCadastro = ref<boolean>(false);
 const codigo = ref<number>(0);
 const descricao = ref<string>('');
 const tipoProduto = ref<string>('');
-const valorFornecedor = ref<number>(0);
+const valorFornecedor = ref<string>('');
 const quantidadeEstoque = ref<number>(0);
 
 function handleInputFiltroDescricao(event: Event) {
@@ -39,7 +39,7 @@ function optionChangeTipoProduto(event: Event) {
 
 function handleInputValorFornecedor(event: Event) {
   const input = event.target as HTMLInputElement;
-  valorFornecedor.value = Number(input.value);
+  valorFornecedor.value = input.value;
 }
 
 async function listarProdutos() {
@@ -70,7 +70,7 @@ function limparcamposFiltros() {
 function limparCamposCadastro() {
   descricao.value = "";
   tipoProduto.value = "";
-  valorFornecedor.value = 0.00;
+  valorFornecedor.value = "";
 }
 
 function novoCadastro() {
@@ -83,7 +83,7 @@ function editar(produto: Produto) {
   codigo.value = produto.codigo;
   descricao.value = produto.descricao;
   tipoProduto.value = produto.tipoProduto;
-  valorFornecedor.value = produto.valorFornecedor;
+  valorFornecedor.value = produto.valorFornecedor.toString();
 
 }
 
@@ -98,7 +98,7 @@ async function salvar(e: { preventDefault: () => void }) {
     return alert("Selecione o Tipo do Produto.");
   }
 
-  if (valorFornecedor.value <= 0) {
+  if (valorFornecedor.value.trim() === "" || Number(valorFornecedor.value) <= 0) {
     return alert("Valor do Fornecedor deve ser maior que zero.");
   }
 
