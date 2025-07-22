@@ -34,36 +34,37 @@ defineProps<{
           placeholder="DESCRIÇÃO DO PRODUTO"/>
     </div>
 
-    <div class="g-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
-        focus-within:border-gray-600focus-within:bg-gray-200">
+    <div class="flex-col columns-2 gap-2">
+      <div class="g-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
+          focus-within:border-gray-600focus-within:bg-gray-200">
 
-        <select
-          id="tipoProduto"
-          name="tipoProduto"
-          :value="tipoProduto"
-          @change="optionChangeTipoProduto"
-          class="outline-0 w-full text-gray-900">
-          <option value="">SELECIONE O TIPO DO PRODUTO</option>
-          <option value="ELETRÔNICO">ELETRÔNICO</option>
-          <option value="ELETRODOMÉSTICO">ELETRODOMÉSTICO</option>
-          <option value="MÓVEL">MÓVEL</option>
-        </select>
+          <select
+            id="tipoProduto"
+            name="tipoProduto"
+            :value="tipoProduto"
+            @change="optionChangeTipoProduto"
+            class="outline-0 w-full text-gray-900">
+            <option value="">SELECIONE O TIPO DO PRODUTO</option>
+            <option value="ELETRÔNICO">ELETRÔNICO</option>
+            <option value="ELETRODOMÉSTICO">ELETRODOMÉSTICO</option>
+            <option value="MÓVEL">MÓVEL</option>
+          </select>
+      </div>
+
+      <div class="g-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
+          focus-within:border-gray-600focus-within:bg-gray-200">
+
+          <input
+            type="number"
+            step="0.01"
+            inputmode="decimal"
+            min="0"
+            :value="valorFornecedor"
+            @input="handleInputValorFornecedor"
+            class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
+            placeholder="VALOR DO FORNECEDOR"/>
+      </div>
     </div>
-
-    <div class="g-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
-        focus-within:border-gray-600focus-within:bg-gray-200">
-
-        <input
-          type="number"
-          step="0.01"
-          inputmode="decimal"
-          min="0"
-          :value="valorFornecedor"
-          @input="handleInputValorFornecedor"
-          class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
-          placeholder="VALOR DO FORNECEDOR"/>
-    </div>
-
     <div class="flex flex-row gap-2">
       <button
         @click="salvar"

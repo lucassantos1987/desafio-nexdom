@@ -7,10 +7,10 @@ defineProps<{
   limpar: () => void;
   editar: (produto: Produto) => void;
   excluir: (produto: Produto) => void;
-  descricao: string;
-  tipoProduto: string;
-  handleInput: (e: Event) => void;
-  optionChange: (e: Event) => void;
+  filtroDescricao: string;
+  filtroTipoProduto: string;
+  handleInputFiltroDescricao: (e: Event) => void;
+  optionChangeFiltrotipoPriduto: (e: Event) => void;
 }>()
 
 </script>
@@ -19,7 +19,7 @@ defineProps<{
   <div class="mt-4 pb-20">
     <div class="border-1 rounded-2xl p-4">
       <h3 class="text-2xl font-medium pb-3">Filtrar Consulta</h3>
-      <div class="flex-col columns-2">
+      <div class="flex-col columns-2 gap-2">
         <div class="bg-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
           focus-within:border-gray-600focus-within:bg-gray-200">
 
@@ -27,8 +27,8 @@ defineProps<{
             type="text"
             id="descricao"
             name="descricao"
-            :value="descricao"
-            @input="handleInput"
+            :value="filtroDescricao"
+            @input="handleInputFiltroDescricao"
             class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
             placeholder="DESCRIÇÃO DO PRODUTO"/>
         </div>
@@ -40,8 +40,8 @@ defineProps<{
             id="tipoProduto"
             name="tipoProduto"
             class="w-full outline-0 text-gray-900"
-            :value="tipoProduto"
-            @change="optionChange">
+            :value="filtroTipoProduto"
+            @change="optionChangeFiltrotipoPriduto">
             <option value="">SELECIONE O TIPO DO PRODUTO</option>
             <option value="ELETRÔNICO">ELETRÔNICO</option>
             <option value="ELETRODOMÉSTICO">ELETRODOMÉSTICO</option>

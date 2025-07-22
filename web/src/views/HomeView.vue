@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import DesafioNexDom from '../components/DesafioNexDom.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <DesafioNexDom />
   </main>
 </template>

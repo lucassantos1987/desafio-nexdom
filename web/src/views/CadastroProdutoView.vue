@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import CadastroProdutoForm from '@/components/CadastroProdutoForm.vue'
-import CadastroProdutoTabela from '@/components/CadastroProdutoTabela.vue';
+import CadastroProdutoForm from '@/components/cadastro/CadastroProdutoForm.vue'
+import CadastroProdutoTabela from '@/components/cadastro/CadastroProdutoTabela.vue';
 import api from '@/http/api';
+
 import type  Produto  from '@/types/produto';
 import { ref, onMounted } from 'vue';
 
@@ -216,9 +217,9 @@ onMounted(() => {
       :limpar="limparcamposFiltros"
       :editar="editar"
       :excluir="excluir"
-      :descricao="filtroDescricao"
-      :tipoProduto="filtroTipoProduto"
-      :handleInput="handleInputFiltroDescricao"
-      :optionChange="optionChangeFiltroTipoProduto"/>
+      :filtroDescricao="filtroDescricao"
+      :filtroTipoProduto="filtroTipoProduto"
+      :handleInputFiltroDescricao="handleInputFiltroDescricao"
+      :optionChangeFiltrotipoPriduto="optionChangeFiltroTipoProduto"/>
   </div>
 </template>
