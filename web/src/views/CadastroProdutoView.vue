@@ -54,7 +54,7 @@ async function listarProdutos() {
     produtos.value = response.data
   })
   .catch((error) => {
-    console.error("Erro no retorno dos produtos: ", error.message);
+    alert(error.response.data.message);
   })
 }
 
@@ -128,8 +128,7 @@ async function salvar(e: { preventDefault: () => void }) {
       }
     })
     .catch((error) => {
-      alert(`Erro Salvar: ${error.message}`);
-      console.error(`Erro Salvar: ${error.message}`);
+      alert(error.response.data.message);
     })
 
     editarCadastro.value = false;
@@ -154,7 +153,6 @@ async function salvar(e: { preventDefault: () => void }) {
     })
     .catch((error) => {
       alert(`Erro Alteração: ${error.message}`);
-      console.error(`Erro Alteração: ${error.message}`)
     })
 
     editarCadastro.value = false;
@@ -180,10 +178,10 @@ async function excluir(produto: Produto) {
       }
     })
     .then(() => {
-      console.log("Registro excluído com sucesso.")
+      console.log("Registro excluído com sucesso.");
     })
     .catch((error) => [
-      console.error(`Erro: ${error.message}`)
+      alert(error.response.data.message)
     ])
 
     listarProdutos();

@@ -36,7 +36,7 @@ async function listarProdutos() {
     produtos.value = response.data
   })
   .catch((error) => {
-    console.error("Erro no retorno dos produtos: ", error.message);
+    alert(error.response.data.message);
   })
 }
 
@@ -81,16 +81,16 @@ async function salvar(e: { preventDefault: () => void }) {
     produto
   }
 
-  console.log(data);
-
   await api.post("movimentacao_estoque", data)
   .then((response) => {
     if (response.data.codigo > 0) {
-      alert("Movimentação gravada com sucesso.")
+      alert("Movimentação gravada com sucesso.");
+      consultar();
+      limparCamposCadastro();
     }
   })
   .catch((error) => {
-    console.error(`Erro na Movimentação de Estoque ${error.message}`);
+    alert(error.response.data.message);
   })
 }
 
@@ -125,7 +125,7 @@ async function consultar() {
     movimentacaoEstoque.value = response.data;
   })
   .catch((error) => {
-    console.error(`Erro na consulta: ${error.message}`);
+    alert(error.response.data.message);
   })
 }
 
@@ -135,7 +135,7 @@ function limparCamposFiltros() {
 }
 
 function limparCamposCadastro() {
-  codigoProduto.value = "";
+  codigoProduto.value = "0";
   tipoMovimentacao.value = "";
   valorVenda.value = "";
   quantidadeMovimentada.value = "";
