@@ -6,7 +6,7 @@ defineProps<{
   consultar: () => void;
   limpar: () => void;
   editar: (produto: Produto) => void;
-  excluir: (codigo: number) => void;
+  excluir: (produto: Produto) => void;
   descricao: string;
   tipoProduto: string;
   handleInput: (e: Event) => void;
@@ -96,7 +96,7 @@ defineProps<{
             </th>
             <th align="center">
               <button
-                @click="excluir(produto.codigo)"
+                @click="excluir(produto)"
                 class="w-full h-10 bg-emerald-600 hover:bg-emerald-700 transition-colors duration-300 text-white rounded-[8px] cursor-pointer">
                 Excluir
               </button>

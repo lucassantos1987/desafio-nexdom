@@ -41,11 +41,6 @@ function handleInputValorFornecedor(event: Event) {
     valorFornecedor.value = Number(input.value);
 }
 
-function handleInputQuantidadeEstoque(event: Event) {
-    const input = event.target as HTMLInputElement;
-    quantidadeEstoque.value = Number(input.value);
-}
-
 async function listarProdutos() {
 
   await api.get("produto", {
@@ -75,7 +70,6 @@ function limparCamposCadastro() {
   descricao.value = "";
   tipoProduto.value = "";
   valorFornecedor.value = 0.00;
-  quantidadeEstoque.value = 0;
 }
 
 function novoCadastro() {
@@ -89,26 +83,52 @@ function editar(produto: Produto) {
   descricao.value = produto.descricao;
   tipoProduto.value = produto.tipoProduto;
   valorFornecedor.value = produto.valorFornecedor;
-  quantidadeEstoque.value = produto.quantidadeEstoque;
+
 }
 
 async function salvar(e: { preventDefault: () => void }) {
   e.preventDefault();
+
+  if (!descricao.value.trim()) {
+    return alert("Digite a Descrição do Produto.");
+  }
+
+  if (!tipoProduto.value.trim()) {
+    return alert("Selecione o Tipo do Produto.");
+  }
+
+  if (valorFornecedor.value <= 0) {
+    return alert("Valor do Fornecedor deve ser maior que zero.");
+  }
+
+  const produtoExiste = produtos.value.some(
+    (produto: Produto) =>
+      produto.descricao === descricao.value.toUpperCase() &&
+      produto.tipoProduto === tipoProduto.value &&
+      produto.codigo !== codigo.value,
+  );
+
+  if (produtoExiste) {
+    return alert("Produto Já Cadastrado com o mesmo Tipo Produto.")
+  }
 
   if (editarCadastro.value === false) {
     const data = {
       descricao: descricao.value.trim().toUpperCase(),
       tipoProduto: tipoProduto.value,
       valorFornecedor: valorFornecedor.value,
-      quantidadeEstoque: quantidadeEstoque.value
+      quantidadeEstoque: 0
     }
 
     await api.post("produto", data)
     .then((response) => {
-      console.log(response)
+      if (response.data.codigo > 0) {
+        alert("Produto Cadastrado com sucesso.")
+      }
     })
     .catch((error) => {
-      console.error(`Erro Salvar: ${error.message}`)
+      alert(`Erro Salvar: ${error.message}`);
+      console.error(`Erro Salvar: ${error.message}`);
     })
 
     editarCadastro.value = false;
@@ -127,13 +147,17 @@ async function salvar(e: { preventDefault: () => void }) {
 
     await api.put(`produto/alterar/${codigo.value}`, data)
     .then((response) => {
-      console.log(response);
+      if (response.data.codigo > 0) {
+        alert("Produto Alterado com sucesso.")
+      }
     })
     .catch((error) => {
+      alert(`Erro Alteração: ${error.message}`);
       console.error(`Erro Alteração: ${error.message}`)
     })
 
     editarCadastro.value = false;
+    limparCamposCadastro();
     listarProdutos();
   }
 }
@@ -144,21 +168,25 @@ function cancelar(e: { preventDefault: () => void }) {
   limparCamposCadastro();
 }
 
-async function excluir(codigo: number) {
+async function excluir(produto: Produto) {
 
-  await api.delete(`produto/excluir/${codigo}`, {
-    params: {
-      codigo: codigo
-    }
-  })
-  .then(() => {
-    console.log("Registro excluído com sucesso.")
-  })
-  .catch((error) => [
-    console.error(`Erro: ${error.message}`)
-  ])
+  if (confirm(`Deseja excluir produto ${produto.codigo} - ${produto.descricao} ?
+    \n\nATENÇÃO: Todos os registros de movimentação de estoque também serão excluídos`)) {
 
-  listarProdutos();
+    await api.delete(`produto/excluir/${produto.codigo}`, {
+      params: {
+        codigo: produto.codigo
+      }
+    })
+    .then(() => {
+      console.log("Registro excluído com sucesso.")
+    })
+    .catch((error) => [
+      console.error(`Erro: ${error.message}`)
+    ])
+
+    listarProdutos();
+  }
 }
 
 onMounted(() => {
@@ -175,11 +203,9 @@ onMounted(() => {
       :descricao="descricao"
       :tipoProduto="tipoProduto"
       :valorFornecedor="valorFornecedor"
-      :quantidadeEstoque="quantidadeEstoque"
       :handleInputDescricao="handleInputDescricao"
       :optionChangeTipoProduto="optionChangeTipoProduto"
       :handleInputValorFornecedor="handleInputValorFornecedor"
-      :handleInputQuantidadeEstoque="handleInputQuantidadeEstoque"
       :novo="novoCadastro"
       :salvar="salvar"
       :cancelar="cancelar"/>
