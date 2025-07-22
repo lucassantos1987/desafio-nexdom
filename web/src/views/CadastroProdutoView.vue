@@ -10,19 +10,40 @@ const filtroDescricao = ref<string>('');
 const filtroTipoProduto = ref<string>('');
 const editarCadastro = ref<boolean>(false);
 
+const codigo = ref<number>(0);
 const descricao = ref<string>('');
 const tipoProduto = ref<string>('');
 const valorFornecedor = ref<number>(0);
 const quantidadeEstoque = ref<number>(0);
 
-function handleInput(event: Event) {
+function handleInputFiltroDescricao(event: Event) {
     const input = event.target as HTMLInputElement;
     filtroDescricao.value = input.value;
 }
 
-function optionChange(event: Event) {
+function optionChangeFiltroTipoProduto(event: Event) {
   const select = event.target as HTMLSelectElement;
   filtroTipoProduto.value = select.value;
+}
+
+function handleInputDescricao(event: Event) {
+    const input = event.target as HTMLInputElement;
+    descricao.value = input.value;
+}
+
+function optionChangeTipoProduto(event: Event) {
+  const select = event.target as HTMLSelectElement;
+  tipoProduto.value = select.value;
+}
+
+function handleInputValorFornecedor(event: Event) {
+    const input = event.target as HTMLInputElement;
+    valorFornecedor.value = Number(input.value);
+}
+
+function handleInputQuantidadeEstoque(event: Event) {
+    const input = event.target as HTMLInputElement;
+    quantidadeEstoque.value = Number(input.value);
 }
 
 async function listarProdutos() {
@@ -64,6 +85,7 @@ function novoCadastro() {
 
 function editar(produto: Produto) {
   editarCadastro.value = true;
+  codigo.value = produto.codigo;
   descricao.value = produto.descricao;
   tipoProduto.value = produto.tipoProduto;
   valorFornecedor.value = produto.valorFornecedor;
@@ -72,6 +94,48 @@ function editar(produto: Produto) {
 
 async function salvar(e: { preventDefault: () => void }) {
   e.preventDefault();
+
+  if (editarCadastro.value === false) {
+    const data = {
+      descricao: descricao.value.trim().toUpperCase(),
+      tipoProduto: tipoProduto.value,
+      valorFornecedor: valorFornecedor.value,
+      quantidadeEstoque: quantidadeEstoque.value
+    }
+
+    await api.post("produto", data)
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      console.error(`Erro Salvar: ${error.message}`)
+    })
+
+    editarCadastro.value = false;
+    limparCamposCadastro();
+    listarProdutos();
+
+  } else {
+
+    const data = {
+      codigo: codigo.value,
+      descricao: descricao.value.trim().toUpperCase(),
+      tipoProduto: tipoProduto.value,
+      valorFornecedor: valorFornecedor.value,
+      quantidadeEstoque: quantidadeEstoque.value
+    }
+
+    await api.put(`produto/alterar/${codigo.value}`, data)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(`Erro Alteração: ${error.message}`)
+    })
+
+    editarCadastro.value = false;
+    listarProdutos();
+  }
 }
 
 function cancelar(e: { preventDefault: () => void }) {
@@ -97,7 +161,6 @@ async function excluir(codigo: number) {
   listarProdutos();
 }
 
-
 onMounted(() => {
   listarProdutos();
 })
@@ -113,8 +176,10 @@ onMounted(() => {
       :tipoProduto="tipoProduto"
       :valorFornecedor="valorFornecedor"
       :quantidadeEstoque="quantidadeEstoque"
-      :handleInput="handleInput"
-      :optionChange="optionChange"
+      :handleInputDescricao="handleInputDescricao"
+      :optionChangeTipoProduto="optionChangeTipoProduto"
+      :handleInputValorFornecedor="handleInputValorFornecedor"
+      :handleInputQuantidadeEstoque="handleInputQuantidadeEstoque"
       :novo="novoCadastro"
       :salvar="salvar"
       :cancelar="cancelar"/>
@@ -126,8 +191,8 @@ onMounted(() => {
       :editar="editar"
       :excluir="excluir"
       :descricao="filtroDescricao"
-      :tipo-produto="filtroTipoProduto"
-      :handleInput="handleInput"
-      :optionChange="optionChange"/>
+      :tipoProduto="filtroTipoProduto"
+      :handleInput="handleInputFiltroDescricao"
+      :optionChange="optionChangeFiltroTipoProduto"/>
   </div>
 </template>

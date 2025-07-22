@@ -16,7 +16,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="mt-4">
+  <div class="mt-4 pb-20">
     <div class="border-1 rounded-2xl p-4">
       <h3 class="text-2xl font-medium pb-3">Filtrar Consulta</h3>
       <div class="flex-col columns-2">

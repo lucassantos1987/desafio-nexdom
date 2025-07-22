@@ -4,8 +4,10 @@ defineProps<{
   tipoProduto: string;
   valorFornecedor: number;
   quantidadeEstoque: number;
-  handleInput: (e: Event) => void;
-  optionChange: (e: Event) => void;
+  handleInputDescricao: (e: Event) => void;
+  optionChangeTipoProduto: (e: Event) => void;
+  handleInputValorFornecedor: (e: Event) => void;
+  handleInputQuantidadeEstoque: (e: Event) => void;
   novo: () => void;
   salvar: (e: { preventDefault: () => void }) => void;
   cancelar: (e: { preventDefault: () => void }) => void;
@@ -29,7 +31,7 @@ defineProps<{
           id="descricao"
           name="descricao"
           :value="descricao"
-          @input="handleInput"
+          @input="handleInputDescricao"
           class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
           placeholder="DESCRIÇÃO DO PRODUTO"/>
     </div>
@@ -41,7 +43,7 @@ defineProps<{
           id="tipoProduto"
           name="tipoProduto"
           :value="tipoProduto"
-          @change="optionChange"
+          @change="optionChangeTipoProduto"
           class="outline-0 w-full text-gray-900">
           <option value="">SELECIONE O TIPO DO PRODUTO</option>
           <option value="ELETRÔNICO">ELETRÔNICO</option>
@@ -59,7 +61,7 @@ defineProps<{
           inputmode="decimal"
           min="0"
           :value="valorFornecedor"
-          @input="handleInput"
+          @input="handleInputValorFornecedor"
           class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
           placeholder="VALOR DO FORNECEDOR"/>
     </div>
@@ -71,7 +73,7 @@ defineProps<{
           type="number"
           min="0"
           :value="quantidadeEstoque"
-          @input="handleInput"
+          @input="handleInputQuantidadeEstoque"
           class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
           placeholder="QUANTIDADE EM ESTOQUE"/>
     </div>
