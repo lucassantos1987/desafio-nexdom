@@ -31,14 +31,14 @@ public class Produto {
     private BigDecimal valorFornecedor;
     
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal quantidadeEstoque;
+    private int quantidadeEstoque;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<MovimentoEstoque> movimentacaoEstoque = new ArrayList<>();
 
     public Produto () {}
 
-    public Produto(String descricao, String tipoProduto, BigDecimal valorFornecedor, BigDecimal quantidadeEstoque) {
+    public Produto(String descricao, String tipoProduto, BigDecimal valorFornecedor, int quantidadeEstoque) {
         this.descricao = descricao;
         this.tipoProduto = tipoProduto;
         this.valorFornecedor = valorFornecedor;
@@ -73,11 +73,11 @@ public class Produto {
         this.valorFornecedor = valorFornecedor;
     }
 
-    public BigDecimal getQuantidadeEstoque() {
+    public int getQuantidadeEstoque() {
         return quantidadeEstoque;
     }
 
-    public void setQuantidadeEstoque(BigDecimal quantidadeEstoque) {
+    public void setQuantidadeEstoque(int quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 

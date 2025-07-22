@@ -34,7 +34,7 @@ public class MovimentoEstoque {
     private Date dataVenda;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal quantidadeMovimentada;
+    private int quantidadeMovimentada;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_produto")
@@ -42,7 +42,7 @@ public class MovimentoEstoque {
 
     public MovimentoEstoque() {}
 
-    public MovimentoEstoque(Produto produto, String tipoMovimentacao, BigDecimal valorVenda, Date dataVenda, BigDecimal quantidadeMovimentada) {
+    public MovimentoEstoque(Produto produto, String tipoMovimentacao, BigDecimal valorVenda, Date dataVenda, int quantidadeMovimentada) {
         this.produto = produto;
         this.tipoMovimentacao = tipoMovimentacao;
         this.valorVenda = valorVenda;
@@ -85,11 +85,11 @@ public class MovimentoEstoque {
         this.dataVenda = dataVenda;
     }
 
-    public BigDecimal getQuantidadeMovimentada() {
+    public int getQuantidadeMovimentada() {
         return quantidadeMovimentada;
     }
 
-    public void setQuantidadeMovimentada(BigDecimal quantidadeMovimentada) {
+    public void setQuantidadeMovimentada(int quantidadeMovimentada) {
         this.quantidadeMovimentada = quantidadeMovimentada;
     }
 
