@@ -3,20 +3,25 @@ package com.desafio.nexdom.server.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.desafio.nexdom.server.dto.MovimentoEstoqueDTO;
+import com.desafio.nexdom.server.enums.TipoMovimentacao;
+import com.desafio.nexdom.server.exceptions.RecursoNaoEncontradoException;
 import com.desafio.nexdom.server.model.MovimentoEstoque;
 import com.desafio.nexdom.server.repository.MovimentoEstoqueRepository;
 
 import jakarta.transaction.Transactional;
 
+@Service
 public class MovimentoEstoqueService {
     
     @Autowired
     private MovimentoEstoqueRepository movimentoEstoqueRepository;
 
-    public List<MovimentoEstoque> listarMovimentacaoEstoque() {
+    public List<MovimentoEstoqueDTO> listarMovimentacaoEstoque() {
         try {
-            return movimentoEstoqueRepository.findAll();
+            return movimentoEstoqueRepository.listarMovimentacaoEstoque();
         } catch (Exception ex) {
             throw ex;
         }         
@@ -25,6 +30,13 @@ public class MovimentoEstoqueService {
     @Transactional
     public MovimentoEstoque salvarMovimentoEstoque(MovimentoEstoque movimentoEstoque) {
         try {
+
+            if (!movimentoEstoque.getTipoMovimentacao().equals(TipoMovimentacao.ENTRADA.getDescricao()) &&
+                !movimentoEstoque.getTipoMovimentacao().equals(TipoMovimentacao.SAIDA.getDescricao())) {
+
+                throw new RecursoNaoEncontradoException("Tipo de movimentação inválido.");
+            }
+
             return movimentoEstoqueRepository.save(movimentoEstoque);
         } catch (Exception ex) {
             throw ex;

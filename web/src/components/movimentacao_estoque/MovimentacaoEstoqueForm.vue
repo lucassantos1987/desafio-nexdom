@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type Produto from '@/types/produto';
+
 defineProps<{
   novo: () => void;
-  salvar: () => void;
-  cancelar: () => void;
+  salvar: (e: { preventDefault: () => void }) => void;
+  cancelar: (e: { preventDefault: () => void }) => void;
   produto: string;
   tipoMovimentacao: string;
   valorVenda: number;
@@ -11,6 +13,7 @@ defineProps<{
   optionChangeTipoMovimentacao: (e: Event) => void;
   handleInputValorVenda: (e: Event) => void;
   handleInputQuantidadeMovimentada: (e: Event) => void;
+  produtos: Produto[]
 }>()
 </script>
 
@@ -34,9 +37,10 @@ defineProps<{
         @change="optionChangeProduto"
         class="outline-0 w-full text-gray-900">
         <option value="">SELECIONE O PRODUTO</option>
-        <option value="ELETRÔNICO">ELETRÔNICO</option>
-        <option value="ELETRODOMÉSTICO">ELETRODOMÉSTICO</option>
-        <option value="MÓVEL">MÓVEL</option>
+
+        <option v-for="produto in produtos" :value="produto.codigo" :key="produto.codigo">
+          {{ produto.descricao }} - {{ produto.tipoProduto }}
+        </option>
       </select>
     </div>
 

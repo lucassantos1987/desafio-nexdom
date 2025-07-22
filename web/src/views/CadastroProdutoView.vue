@@ -18,8 +18,8 @@ const valorFornecedor = ref<number>(0);
 const quantidadeEstoque = ref<number>(0);
 
 function handleInputFiltroDescricao(event: Event) {
-    const input = event.target as HTMLInputElement;
-    filtroDescricao.value = input.value;
+  const input = event.target as HTMLInputElement;
+  filtroDescricao.value = input.value;
 }
 
 function optionChangeFiltroTipoProduto(event: Event) {
@@ -28,8 +28,8 @@ function optionChangeFiltroTipoProduto(event: Event) {
 }
 
 function handleInputDescricao(event: Event) {
-    const input = event.target as HTMLInputElement;
-    descricao.value = input.value;
+  const input = event.target as HTMLInputElement;
+  descricao.value = input.value;
 }
 
 function optionChangeTipoProduto(event: Event) {
@@ -38,8 +38,8 @@ function optionChangeTipoProduto(event: Event) {
 }
 
 function handleInputValorFornecedor(event: Event) {
-    const input = event.target as HTMLInputElement;
-    valorFornecedor.value = Number(input.value);
+  const input = event.target as HTMLInputElement;
+  valorFornecedor.value = Number(input.value);
 }
 
 async function listarProdutos() {

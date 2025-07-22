@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type Produto from '@/types/produto';
+
 defineProps<{
   filtroProduto: string;
   filtroTipoMovimentacao: string;
@@ -6,6 +8,7 @@ defineProps<{
   limpar: () => void;
   optionChangeFiltroProduto: (e: Event) => void;
   optionChangeFiltroTipoMovimentacao: (e: Event) => void;
+  produtos: Produto[];
 }>()
 </script>
 
@@ -23,9 +26,11 @@ defineProps<{
             :value="filtroProduto"
             @change="optionChangeFiltroProduto">
             <option value="">SELECIONE O PRODUTO</option>
-            <option value="ELETRÔNICO">ELETRÔNICO</option>
-            <option value="ELETRODOMÉSTICO">ELETRODOMÉSTICO</option>
-            <option value="MÓVEL">MÓVEL</option>
+
+            <option v-for="produto in produtos" :value="produto.codigo" :key="produto.codigo">
+              {{ produto.descricao }} - {{ produto.tipoProduto }}
+            </option>
+
           </select>
         </div>
 

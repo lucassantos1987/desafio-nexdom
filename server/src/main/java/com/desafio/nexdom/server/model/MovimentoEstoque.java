@@ -24,7 +24,7 @@ public class MovimentoEstoque {
     private Long codigo;
 
     @Column(nullable = false)
-    private int tipoMovimentacao;
+    private String tipoMovimentacao;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal valorVenda;
@@ -42,7 +42,7 @@ public class MovimentoEstoque {
 
     public MovimentoEstoque() {}
 
-    public MovimentoEstoque(Produto produto, int tipoMovimentacao, BigDecimal valorVenda, Date dataVenda, BigDecimal quantidadeMovimentada) {
+    public MovimentoEstoque(Produto produto, String tipoMovimentacao, BigDecimal valorVenda, Date dataVenda, BigDecimal quantidadeMovimentada) {
         this.produto = produto;
         this.tipoMovimentacao = tipoMovimentacao;
         this.valorVenda = valorVenda;
@@ -61,11 +61,11 @@ public class MovimentoEstoque {
         this.produto = produto;
     }
 
-    public int getTipoMovimentacao() {
+    public String getTipoMovimentacao() {
         return tipoMovimentacao;
     }
 
-    public void setTipoMovimentacao(int tipoMovimentacao) {
+    public void setTipoMovimentacao(String tipoMovimentacao) {
         this.tipoMovimentacao = tipoMovimentacao;
     }
 
