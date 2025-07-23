@@ -7,5 +7,6 @@ export interface MovimentacaoEstoque {
   estoqueAnterior: number;
   estoqueDisponivel: number;
   valorVenda: number;
+  valorVendaTotal: number;
   dataVenda: string;
 }

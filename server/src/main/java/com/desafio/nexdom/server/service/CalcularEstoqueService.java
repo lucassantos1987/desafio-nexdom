@@ -22,7 +22,7 @@ public class CalcularEstoqueService {
             }
 
             if (quantidadeRetornada < 0) {
-                throw new ValorNumericoInvalidoException("Saldo insuficiente");
+                throw new ValorNumericoInvalidoException("Quantidade em estoque insuficiente");
             }
 
             return quantidadeRetornada;

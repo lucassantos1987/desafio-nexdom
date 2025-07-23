@@ -120,7 +120,12 @@ function handleInputQuantidadeMovimentada(event: Event) {
 }
 
 async function consultar() {
-  await api.get("movimentacao_estoque")
+  await api.get("movimentacao_estoque", {
+    params: {
+      codigoProduto: Number(filtroProduto.value),
+      tipoMovimentacao: filtroTipoMovimentacao.value
+    }
+  })
   .then((response) => {
     movimentacaoEstoque.value = response.data;
   })

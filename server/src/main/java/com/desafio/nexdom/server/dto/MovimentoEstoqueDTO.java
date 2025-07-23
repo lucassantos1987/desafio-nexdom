@@ -13,12 +13,13 @@ public class MovimentoEstoqueDTO {
     private int estoqueAnterior;
     private int estoqueDisponivel;
     private BigDecimal valorVenda;
+    private BigDecimal valorVendaTotal;
     private Date dataVenda;
 
     public MovimentoEstoqueDTO() {}
 
     public MovimentoEstoqueDTO(Long codigo, Long codigoProduto, String descricaoProduto, String tipoMovimentoEstoque,
-        int quantidadeMovimentada, int estoqueAnterior, int estoqueDisponivel, BigDecimal valorVenda, Date dataVenda) {
+        int quantidadeMovimentada, int estoqueAnterior, int estoqueDisponivel, BigDecimal valorVenda, BigDecimal valorVendaTotal, Date dataVenda) {
             this.codigo = codigo;
             this.codigoProduto = codigoProduto;
             this.descricaoProduto = descricaoProduto;
@@ -27,6 +28,7 @@ public class MovimentoEstoqueDTO {
             this.estoqueAnterior = estoqueAnterior;
             this.estoqueDisponivel = estoqueDisponivel;
             this.valorVenda = valorVenda;
+            this.valorVendaTotal = valorVendaTotal;
             this.dataVenda = dataVenda;
     }
 
@@ -60,6 +62,10 @@ public class MovimentoEstoqueDTO {
 
     public BigDecimal getValorVenda() {
         return valorVenda;
+    }
+
+    public BigDecimal getValorVendaTotal() {
+        return valorVendaTotal;
     }
 
     public Date getDataVenda() {

@@ -27,18 +27,18 @@ public class ProdutoService {
 
             if (descricao.trim().isEmpty() && tipoProduto.trim().isEmpty()) {
                 produto = produtoRepository.findAll();
-            }
 
-            if (!descricao.trim().isEmpty() && tipoProduto.trim().isEmpty()) {
+            } else if (!descricao.trim().isEmpty() && tipoProduto.trim().isEmpty()) {
                 produto = produtoRepository.findByDescricaoLike(descricao);
-            }
 
-            if (descricao.trim().isEmpty() && !tipoProduto.trim().isEmpty()) {
+            } else if (descricao.trim().isEmpty() && !tipoProduto.trim().isEmpty()) {
                 produto = produtoRepository.findByTipoProduto(tipoProduto);
-            } 
 
-            if (!descricao.trim().isEmpty() && !tipoProduto.trim().isEmpty()) {
+            } else if (!descricao.trim().isEmpty() && !tipoProduto.trim().isEmpty()) {
                 produto = produtoRepository.findByDescricaoLikeAndTipoProduto(descricao, tipoProduto);
+
+            } else {
+                throw new RecursoNaoEncontradoException("Paramêtros inválidos.");
             }
 
             return produto;

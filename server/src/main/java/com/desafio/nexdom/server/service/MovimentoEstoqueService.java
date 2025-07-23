@@ -1,5 +1,6 @@
 package com.desafio.nexdom.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,28 @@ public class MovimentoEstoqueService {
     
 
 
-    public List<MovimentoEstoqueDTO> listarMovimentacaoEstoque() {
+    public List<MovimentoEstoqueDTO> listarMovimentacaoEstoque(Long codigoProduto, String tipoMovimentacao) {
         try {
-            return movimentoEstoqueRepository.listarMovimentacaoEstoque();
+
+            List<MovimentoEstoqueDTO> movimentacaoEstoque = new ArrayList<>();
+
+            if (codigoProduto <= 0 && tipoMovimentacao.trim().isEmpty()) {
+                movimentacaoEstoque = movimentoEstoqueRepository.findMovimentacaoEstoqueAll();
+
+            } else if (codigoProduto > 0 && tipoMovimentacao.trim().isEmpty()) {
+                movimentacaoEstoque = movimentoEstoqueRepository.findMovimentacaoEstoqueByProduto(codigoProduto);
+
+            } else if (codigoProduto <= 0 && !tipoMovimentacao.trim().isEmpty()) {
+                movimentacaoEstoque = movimentoEstoqueRepository.findMovimentacaoEstoqueByTipoMovimentacao(tipoMovimentacao);
+
+            } else if (codigoProduto > 0 && !tipoMovimentacao.trim().isEmpty()) {
+                movimentacaoEstoque = movimentoEstoqueRepository.findMovimentacaoEstoqueByProdutoAndTipoMovimentacao(codigoProduto, tipoMovimentacao);
+
+            } else {
+                throw new RecursoNaoEncontradoException("Paramêtros inválidos.");
+            }
+
+            return movimentacaoEstoque;
         } catch (Exception ex) {
             throw ex;
         }         

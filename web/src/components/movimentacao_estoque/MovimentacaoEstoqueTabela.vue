@@ -44,7 +44,7 @@ defineProps<{
             @change="optionChangeFiltroTipoMovimentacao"
             class="w-full outline-0 text-gray-900">
             <option value="">SELECIONE O TIPO MOVIMENTAÇÃO</option>
-            <option value="ENTRADDA">ENTRADA</option>
+            <option value="ENTRADA">ENTRADA</option>
             <option value="SAÍDA">SAÍDA</option>
           </select>
         </div>
@@ -76,6 +76,7 @@ defineProps<{
             <th align="right">Estoque Anterior</th>
             <th align="right">Estoque Disponível</th>
             <th align="right">Valor Venda</th>
+            <th align="right">Valor Venda Total</th>
             <th align="left" class="pl-8">Data Venda</th>
           </tr>
         </thead>
@@ -88,6 +89,7 @@ defineProps<{
             <th class="font-light" align="right">{{ estoque.estoqueAnterior }}</th>
             <th class="font-light" align="right">{{ estoque.estoqueDisponivel }}</th>
             <th class="font-light" align="right">{{ estoque.valorVenda }}</th>
+            <th class="font-light" align="right">{{ estoque.valorVendaTotal }}</th>
             <th class="font-light pl-8" align="left">{{ estoque.dataVenda }}</th>
           </tr>
         </tbody>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.desafio.nexdom.server.dto.MovimentoEstoqueDTO;
@@ -12,11 +13,48 @@ import com.desafio.nexdom.server.model.MovimentoEstoque;
 @Repository
 public interface MovimentoEstoqueRepository extends JpaRepository<MovimentoEstoque, Long> {
         
-    @Query("SELECT new com.desafio.nexdom.server.dto.MovimentoEstoqueDTO(" + //
-    "me.codigo, p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " + //
-    "me.tipoMovimentacao AS tipoMovimentoEstoque, me.quantidadeMovimentada, " + //
-    "me.estoqueAnterior, me.estoqueDisponivel, me.valorVenda, me.dataVenda) " + //
-    "FROM MovimentoEstoque me " + //
-    "INNER JOIN Produto p ON p.codigo = me.produto.codigo")
-    public List<MovimentoEstoqueDTO> listarMovimentacaoEstoque();
+    @Query("SELECT new com.desafio.nexdom.server.dto.MovimentoEstoqueDTO(" + 
+    "me.codigo, p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " + 
+    "me.tipoMovimentacao AS tipoMovimentoEstoque, me.quantidadeMovimentada, " + 
+    "me.estoqueAnterior, me.estoqueDisponivel, me.valorVenda, " +
+    "(me.valorVenda * me.quantidadeMovimentada) AS valorVendaTotal, me.dataVenda) " + 
+    "FROM MovimentoEstoque me " + 
+    "INNER JOIN Produto p ON p.codigo = me.produto.codigo " + 
+    "ORDER BY p.descricao, me.codigo ASC")
+    public List<MovimentoEstoqueDTO> findMovimentacaoEstoqueAll();
+
+    @Query("SELECT new com.desafio.nexdom.server.dto.MovimentoEstoqueDTO(" + 
+    "me.codigo, p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " + 
+    "me.tipoMovimentacao AS tipoMovimentoEstoque, me.quantidadeMovimentada, " + 
+    "me.estoqueAnterior, me.estoqueDisponivel, me.valorVenda, " +
+    "(me.valorVenda * me.quantidadeMovimentada) AS valorVendaTotal, me.dataVenda) " + 
+    "FROM MovimentoEstoque me " + 
+    "INNER JOIN Produto p ON p.codigo = me.produto.codigo " +
+    "WHERE p.codigo = :codigoProduto " + 
+    "ORDER BY p.descricao, me.codigo ASC")
+    public List<MovimentoEstoqueDTO> findMovimentacaoEstoqueByProduto(@Param("codigoProduto") Long codigoProduto);
+
+    @Query("SELECT new com.desafio.nexdom.server.dto.MovimentoEstoqueDTO(" + 
+    "me.codigo, p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " + 
+    "me.tipoMovimentacao AS tipoMovimentoEstoque, me.quantidadeMovimentada, " + 
+    "me.estoqueAnterior, me.estoqueDisponivel, me.valorVenda, " +
+    "(me.valorVenda * me.quantidadeMovimentada) AS valorVendaTotal, me.dataVenda) " + 
+    "FROM MovimentoEstoque me " + 
+    "INNER JOIN Produto p ON p.codigo = me.produto.codigo " +
+    "WHERE me.tipoMovimentacao = :tipoMovimentacao " + 
+    "ORDER BY p.descricao, me.codigo ASC")
+    public List<MovimentoEstoqueDTO> findMovimentacaoEstoqueByTipoMovimentacao(@Param("tipoMovimentacao") String tipoMovimentacao);
+
+    @Query("SELECT new com.desafio.nexdom.server.dto.MovimentoEstoqueDTO(" + 
+    "me.codigo, p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " + 
+    "me.tipoMovimentacao AS tipoMovimentoEstoque, me.quantidadeMovimentada, " + 
+    "me.estoqueAnterior, me.estoqueDisponivel, me.valorVenda, " +
+    "(me.valorVenda * me.quantidadeMovimentada) AS valorVendaTotal, me.dataVenda) " + 
+    "FROM MovimentoEstoque me " + 
+    "INNER JOIN Produto p ON p.codigo = me.produto.codigo " +
+    "WHERE p.codigo = :codigoProduto " +
+    "AND me.tipoMovimentacao = :tipoMovimentacao " +  
+    "ORDER BY p.descricao, me.codigo ASC")
+    public List<MovimentoEstoqueDTO> findMovimentacaoEstoqueByProdutoAndTipoMovimentacao(@Param("codigoProduto") Long codigoProduto, @Param("tipoMovimentacao") String tipoMovimentacao);
+    
 }
