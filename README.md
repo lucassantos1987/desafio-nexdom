@@ -11,7 +11,7 @@
   - Typescript
   - TailwindCss
   - Para realizar a comunicação com o servidor, foi utilizado o axios
-  - 
+    
 ### Para rodar a aplicação front-end, vá na pasta do projeto/web:
   - npm install
   - npm run dev
