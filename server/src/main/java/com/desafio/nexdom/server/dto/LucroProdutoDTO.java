@@ -31,16 +31,32 @@ public class LucroProdutoDTO {
         return codigoProduto;
     }
 
+    public void setCodigoProduto(Long codigoProduto) {
+        this.codigoProduto = codigoProduto;
+    }
+
     public String getDescricaoProduto() {
         return descricaoProduto;
+    }
+
+    public void setDescricaoProduto(String descricaoProduto) {
+        this.descricaoProduto = descricaoProduto;
     }
 
     public int getQuantidadeTotalSaida() {
         return quantidadeTotalSaida;
     }
 
+    public void setQuantidadeTotalSaida(int quantidadeTotalSaida) {
+        this.quantidadeTotalSaida = quantidadeTotalSaida;
+    }
+
     public BigDecimal getValorFornecedor() {
         return valorFornecedor;
+    }
+
+    public void setValorFornecedor(BigDecimal valorFornecedor) {
+        this.valorFornecedor = valorFornecedor;
     }
 
     public BigDecimal getTotalLucro() {

@@ -135,7 +135,7 @@ async function consultar() {
 }
 
 function limparCamposFiltros() {
-  filtroProduto.value = "";
+  filtroProduto.value = "0";
   filtroTipoMovimentacao.value = "";
 }
 

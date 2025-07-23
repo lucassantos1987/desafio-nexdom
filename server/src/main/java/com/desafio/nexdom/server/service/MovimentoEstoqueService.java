@@ -59,6 +59,23 @@ public class MovimentoEstoqueService {
         }         
     }
 
+    public List<MovimentoEstoqueDTO> listarMovimentacaoEstoqueTipoProduto(String tipoProduto) {
+
+        try {
+            List<MovimentoEstoqueDTO> movimentacaoEstoque = new ArrayList<>();
+
+            if (tipoProduto.trim().isEmpty()) {
+                movimentacaoEstoque = movimentoEstoqueRepository.findMovimentacaoEstoqueByTipoProdutoAll();
+            } else {
+                movimentacaoEstoque = movimentoEstoqueRepository.findMovimentacaoEstoqueByTipoProdutoByTipoProduto(tipoProduto);
+            }
+
+            return movimentacaoEstoque;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
     @Transactional
     public MovimentoEstoque salvarMovimentoEstoque(MovimentoEstoque movimentoEstoque) {
         try {

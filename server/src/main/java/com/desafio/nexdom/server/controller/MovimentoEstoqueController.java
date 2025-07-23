@@ -27,7 +27,11 @@ public class MovimentoEstoqueController {
         return movimentoEstoqueService.listarMovimentacaoEstoque(codigoProduto, tipoMovimentacao);
     }
 
-    
+    @GetMapping("/consuta_tipo_produto")
+    public List<MovimentoEstoqueDTO> listarMovimentacaoEstoqueTipoProduto(@RequestParam String tipoProduto) {
+        return movimentoEstoqueService.listarMovimentacaoEstoqueTipoProduto(tipoProduto);
+    }
+
     @PostMapping
     public MovimentoEstoque salvarMovimentoEstoque(@RequestBody MovimentoEstoque movimentoEstoque) {
         return movimentoEstoqueService.salvarMovimentoEstoque(movimentoEstoque);

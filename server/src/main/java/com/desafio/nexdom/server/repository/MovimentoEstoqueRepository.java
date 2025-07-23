@@ -83,5 +83,26 @@ public interface MovimentoEstoqueRepository extends JpaRepository<MovimentoEstoq
 
     @Query(value = "SELECT me.valorFornecedor FROM MovimentoEstoque me WHERE me.produto.codigo = :codigoProduto AND me.tipoMovimentacao = 'SAÍDA'")
     public List<Double> findValorFornecedorByVenda(@Param("codigoProduto") Long codigoProduto);
+
+    @Query("SELECT new com.desafio.nexdom.server.dto.MovimentoEstoqueDTO(" + 
+    "p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " + 
+    "me.quantidadeMovimentada, " + 
+    "me.estoqueDisponivel, p.quantidadeEstoque AS estoqueAtual) " +
+    "FROM MovimentoEstoque me " + 
+    "INNER JOIN Produto p ON p.codigo = me.produto.codigo " +
+    "WHERE me.tipoMovimentacao = 'SAÍDA' " +
+    "ORDER BY p.descricao, me.codigo ASC")
+    public List<MovimentoEstoqueDTO> findMovimentacaoEstoqueByTipoProdutoAll();
     
+    @Query("SELECT new com.desafio.nexdom.server.dto.MovimentoEstoqueDTO(" + 
+    "p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " + 
+    "me.quantidadeMovimentada, " + 
+    "me.estoqueDisponivel, p.quantidadeEstoque AS estoqueAtual) " +
+    "FROM MovimentoEstoque me " + 
+    "INNER JOIN Produto p ON p.codigo = me.produto.codigo " +
+    "WHERE me.tipoMovimentacao = 'SAÍDA' " +
+    "AND p.tipoProduto = :tipoProduto " +
+    "ORDER BY p.descricao, me.codigo ASC")
+    public List<MovimentoEstoqueDTO> findMovimentacaoEstoqueByTipoProdutoByTipoProduto(@Param("tipoProduto") String tipoProduto);
+
 }
