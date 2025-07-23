@@ -3,8 +3,6 @@ package com.desafio.nexdom.server.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -22,10 +20,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.desafio.nexdom.server.enums.TipoMovimentacao;
 import com.desafio.nexdom.server.enums.TipoProduto;
 import com.desafio.nexdom.server.exceptions.RecursoNaoEncontradoException;
-import com.desafio.nexdom.server.exceptions.ValorNumericoInvalidoException;
 import com.desafio.nexdom.server.model.Produto;
 import com.desafio.nexdom.server.repository.ProdutoRepository;
 
