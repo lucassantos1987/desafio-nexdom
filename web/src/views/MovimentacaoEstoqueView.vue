@@ -13,7 +13,7 @@ const tipoMovimentacao = ref<string>('');
 const valorVenda = ref<string>('');
 const quantidadeMovimentada = ref<string>('');
 
-const filtroProduto = ref<string>('');
+const filtroProduto = ref<string>('0');
 const filtroTipoMovimentacao = ref<string>('');
 
 const movimentacaoEstoque = ref<MovimentacaoEstoque[]>([]);
