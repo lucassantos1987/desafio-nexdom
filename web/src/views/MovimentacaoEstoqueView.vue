@@ -111,12 +111,14 @@ function optionChangeTipoMovimentacao(event: Event) {
 
 function handleInputValorVenda(event: Event) {
   const input = event.target as HTMLInputElement;
-  valorVenda.value = input.value;
+  const valor: number = Number(input.value) > 99999999.99 ? 99999999.99 : Number(input.value);
+  valorVenda.value = valor.toString();
 }
 
 function handleInputQuantidadeMovimentada(event: Event) {
   const input = event.target as HTMLInputElement;
-  quantidadeMovimentada.value = input.value;
+  const valor: number = Number(input.value) > 999999 ? 999999 : Number(input.value);
+  quantidadeMovimentada.value = valor.toString();
 }
 
 async function consultar() {

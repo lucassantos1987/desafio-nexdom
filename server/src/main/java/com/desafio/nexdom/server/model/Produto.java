@@ -21,7 +21,7 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String descricao;
     
     @Column(nullable = false)

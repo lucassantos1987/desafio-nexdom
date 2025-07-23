@@ -30,6 +30,7 @@ defineProps<{
           name="descricao"
           :value="descricao"
           @input="handleInputDescricao"
+          maxlength="30"
           class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
           placeholder="DESCRIÇÃO DO PRODUTO"/>
     </div>
@@ -59,10 +60,11 @@ defineProps<{
             step="0.01"
             inputmode="decimal"
             min="0"
+            max="99999999.99"
             :value="valorFornecedor"
             @input="handleInputValorFornecedor"
             class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
-            placeholder="VALOR DO FORNECEDOR"/>
+            placeholder="VALOR DO FORNECEDOR (USE PONTO PARA VALOR DECIMAL)"/>
       </div>
     </div>
     <div class="flex flex-row gap-2">

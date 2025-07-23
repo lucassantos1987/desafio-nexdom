@@ -70,8 +70,9 @@ defineProps<{
           min="0"
           :value="valorVenda"
           @input="handleInputValorVenda"
+          max="99999999.99"
           class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
-          placeholder="VALOR DE VFNDA"/>
+          placeholder="VALOR DE VFNDA (USE PONTO PARA VALOR DECIMAL)"/>
       </div>
 
       <div class="g-gray-100 h-12 border border-gray-400 rounded-xl px-4 flex items-center gap-2
@@ -79,11 +80,11 @@ defineProps<{
 
         <input
           type="number"
-          step="0.01"
-          inputmode="decimal"
+          step="1"
           min="0"
           :value="quantidadeMovimentada"
           @input="handleInputQuantidadeMovimentada"
+          max="999999"
           class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
           placeholder="QUANTIDADE MOVIMENTADA"/>
       </div>

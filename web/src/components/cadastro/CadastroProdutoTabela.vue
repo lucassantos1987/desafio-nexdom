@@ -29,6 +29,7 @@ defineProps<{
             name="descricao"
             :value="filtroDescricao"
             @input="handleInputFiltroDescricao"
+            maxlength="30"
             class="w-full outline-0 placeholder-gray-800 text-gray-800 uppercase"
             placeholder="DESCRIÇÃO DO PRODUTO"/>
         </div>

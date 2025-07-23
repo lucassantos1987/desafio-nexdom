@@ -39,7 +39,8 @@ function optionChangeTipoProduto(event: Event) {
 
 function handleInputValorFornecedor(event: Event) {
   const input = event.target as HTMLInputElement;
-  valorFornecedor.value = input.value;
+  const valor: number = Number(input.value) > 99999999.99 ? 99999999.99 : Number(input.value);
+  valorFornecedor.value =  valor.toString();
 }
 
 async function listarProdutos() {
@@ -84,7 +85,6 @@ function editar(produto: Produto) {
   descricao.value = produto.descricao;
   tipoProduto.value = produto.tipoProduto;
   valorFornecedor.value = produto.valorFornecedor.toString();
-
 }
 
 async function salvar(e: { preventDefault: () => void }) {
