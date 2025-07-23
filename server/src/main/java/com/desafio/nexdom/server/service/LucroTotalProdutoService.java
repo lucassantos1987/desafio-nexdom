@@ -18,11 +18,16 @@ public class LucroTotalProdutoService {
     @Autowired
     MovimentoEstoqueRepository movimentoEstoqueRepository;
 
-    public List<LucroProdutoDTO> listarLucroTotalProduto() {
+    public List<LucroProdutoDTO> listarLucroTotalProduto(Long codigoProduto) {
         
         try {
             List<LucroProdutoDTO> lucroTotal = new ArrayList<>();
-            lucroTotal = movimentoEstoqueRepository.findTotalLucroProduto();
+
+            if (codigoProduto <= 0) {
+                lucroTotal = movimentoEstoqueRepository.findTotalLucroProdutoAll();
+            } else {
+                lucroTotal = movimentoEstoqueRepository.findTotalLucroProdutoByProduto(codigoProduto);
+            }            
 
             List<LucroProdutoDTO> lucroProdutoRetorno = new ArrayList<>();
 

@@ -66,7 +66,17 @@ public interface MovimentoEstoqueRepository extends JpaRepository<MovimentoEstoq
     "FROM MovimentoEstoque me " +
     "INNER JOIN Produto p ON p.codigo = me.produto.codigo " +
     "WHERE me.tipoMovimentacao = 'SAÍDA'")
-    public List<LucroProdutoDTO> findTotalLucroProduto();
+    public List<LucroProdutoDTO> findTotalLucroProdutoAll();
+
+    @Query("SELECT new com.desafio.nexdom.server.dto.LucroProdutoDTO(" +
+    "p.codigo AS codigoProduto, p.descricao AS descricaoProduto, " +
+    "me.quantidadeMovimentada, " +
+    "p.valorFornecedor) " +
+    "FROM MovimentoEstoque me " +
+    "INNER JOIN Produto p ON p.codigo = me.produto.codigo " +
+    "WHERE me.tipoMovimentacao = 'SAÍDA' " +
+    "AnD p.codigo = :codigoProduto")
+    public List<LucroProdutoDTO> findTotalLucroProdutoByProduto(@Param("codigoProduto") Long codigoProduto);
 
     @Query(value = "SELECT me.valorVenda FROM MovimentoEstoque me WHERE me.produto.codigo = :codigoProduto AND me.tipoMovimentacao = 'SAÍDA' ORDER BY me.codigo DESC LIMIT 1")
     public BigDecimal findValorVenda(@Param("codigoProduto") Long codigoProduto);

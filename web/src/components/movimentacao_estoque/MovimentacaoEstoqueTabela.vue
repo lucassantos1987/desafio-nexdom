@@ -27,7 +27,7 @@ defineProps<{
             class="w-full outline-0 text-gray-900"
             :value="filtroProduto"
             @change="optionChangeFiltroProduto">
-            <option value="">SELECIONE O PRODUTO</option>
+            <option value="0">SELECIONE O PRODUTO</option>
 
             <option v-for="produto in produtos" :value="produto.codigo" :key="produto.codigo">
               {{ produto.descricao }} - {{ produto.tipoProduto }}
