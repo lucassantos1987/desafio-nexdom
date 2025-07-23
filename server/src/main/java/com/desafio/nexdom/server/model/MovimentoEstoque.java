@@ -26,8 +26,11 @@ public class MovimentoEstoque {
     @Column(nullable = false)
     private String tipoMovimentacao;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale =  2)
     private BigDecimal valorVenda;
+
+    @Column(nullable = false, precision = 10, scale =  2)
+    private BigDecimal valorFornecedor;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -48,11 +51,12 @@ public class MovimentoEstoque {
 
     public MovimentoEstoque() {}
 
-    public MovimentoEstoque(Produto produto, String tipoMovimentacao, BigDecimal valorVenda, Date dataVenda, 
+    public MovimentoEstoque(Produto produto, String tipoMovimentacao, BigDecimal valorVenda, BigDecimal valorFornecedor, Date dataVenda, 
         int quantidadeMovimentada, int estoqueAnterior, int estoqueDisponivel) {
         this.produto = produto;
         this.tipoMovimentacao = tipoMovimentacao;
         this.valorVenda = valorVenda;
+        this.valorFornecedor = valorFornecedor;
         this.quantidadeMovimentada = quantidadeMovimentada;
         this.estoqueAnterior = estoqueAnterior;
         this.estoqueDisponivel = estoqueDisponivel;
@@ -84,6 +88,14 @@ public class MovimentoEstoque {
 
     public void setValorVenda(BigDecimal valorVenda) {
         this.valorVenda = valorVenda;
+    }
+
+    public BigDecimal getValorFornecedor() {
+        return valorFornecedor;
+    }
+
+    public void setValorFornecedor(BigDecimal valorFornecedor) {
+        this.valorFornecedor = valorFornecedor;
     }
 
     public Date getDataVenda() {

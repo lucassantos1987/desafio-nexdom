@@ -1,5 +1,6 @@
 package com.desafio.nexdom.server.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +91,12 @@ public class MovimentoEstoqueService {
             movimentoEstoque.setEstoqueDisponivel(quantidadeEstoqueNovo);
 
             produtoRepository.updateQuantidadeEstoque(quantidadeEstoqueNovo, produto.getCodigo());
+
+            if (movimentoEstoque.getTipoMovimentacao().equals(TipoMovimentacao.SAIDA.getDescricao())) {
+                movimentoEstoque.setValorFornecedor(produtoRepository.getValorFornecedor(produto.getCodigo()));
+            } else {
+                movimentoEstoque.setValorFornecedor(new BigDecimal(0));
+            }
 
             if (movimentoEstoque.getTipoMovimentacao().equals(TipoMovimentacao.ENTRADA.getDescricao())) {
                 produtoRepository.updateValorForncedor(movimentoEstoque.getValorVenda(), produto.getCodigo());

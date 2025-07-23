@@ -78,7 +78,10 @@ public interface MovimentoEstoqueRepository extends JpaRepository<MovimentoEstoq
     "AnD p.codigo = :codigoProduto")
     public List<LucroProdutoDTO> findTotalLucroProdutoByProduto(@Param("codigoProduto") Long codigoProduto);
 
-    @Query(value = "SELECT me.valorVenda FROM MovimentoEstoque me WHERE me.produto.codigo = :codigoProduto AND me.tipoMovimentacao = 'SAÍDA' ORDER BY me.codigo DESC LIMIT 1")
-    public BigDecimal findValorVenda(@Param("codigoProduto") Long codigoProduto);
+    @Query(value = "SELECT me.valorVenda FROM MovimentoEstoque me WHERE me.produto.codigo = :codigoProduto AND me.tipoMovimentacao = 'SAÍDA'")
+    public List<Double> findValorVenda(@Param("codigoProduto") Long codigoProduto);
+
+    @Query(value = "SELECT me.valorFornecedor FROM MovimentoEstoque me WHERE me.produto.codigo = :codigoProduto AND me.tipoMovimentacao = 'SAÍDA'")
+    public List<Double> findValorFornecedorByVenda(@Param("codigoProduto") Long codigoProduto);
     
 }

@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.nexdom.server.dto.LucroProdutoDTO;
-import com.desafio.nexdom.server.service.LucroTotalProdutoService;
+import com.desafio.nexdom.server.service.LucroProdutoService;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
 @RequestMapping("api/lucro_produto")
-public class LucroTotalProdutoController {
+public class LucroProdutoController {
     
     @Autowired
-    private LucroTotalProdutoService lucroTotalProdutoService;
+    private LucroProdutoService lucroTotalProdutoService;
 
     @GetMapping
     public List<LucroProdutoDTO> listarLucroProduto(@RequestParam Long codigoProduto) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.DoubleStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import com.desafio.nexdom.server.dto.LucroProdutoDTO;
 import com.desafio.nexdom.server.repository.MovimentoEstoqueRepository;
 
 @Service
-public class LucroTotalProdutoService {
+public class LucroProdutoService {
     
     @Autowired
     MovimentoEstoqueRepository movimentoEstoqueRepository;
@@ -37,7 +38,13 @@ public class LucroTotalProdutoService {
 
                 if (count == 0) {
 
-                    BigDecimal valorLucro = (movimentoEstoqueRepository.findValorVenda(lucroProduto.getCodigoProduto()).subtract(lucroProduto.getValorFornecedor()));
+                    List<Double> valorVenda = movimentoEstoqueRepository.findValorVenda(lucroProduto.getCodigoProduto());
+                    List<Double> valorFornecedor = movimentoEstoqueRepository.findValorFornecedorByVenda(lucroProduto.getCodigoProduto());
+
+                    double totalValorVenda = valorVenda.stream().mapToDouble(Double::doubleValue).sum();
+                    double totalValorFornecedor = valorFornecedor.stream().mapToDouble(Double::doubleValue).sum();
+                    
+                    BigDecimal valorLucro = new BigDecimal(totalValorVenda - totalValorFornecedor);
 
                     LucroProdutoDTO lucro = new LucroProdutoDTO(
                         lucroProduto.getCodigoProduto(),
