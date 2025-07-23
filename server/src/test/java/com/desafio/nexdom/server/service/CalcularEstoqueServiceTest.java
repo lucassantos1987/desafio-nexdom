@@ -3,7 +3,6 @@ package com.desafio.nexdom.server.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,7 @@ public class CalcularEstoqueServiceTest {
 
     @Test
     @DisplayName("Quando o produto tem estoque disponível suficiente")
-    void calcularEstoqueComSaldoDisponivel() {
+    void calcularEstoqueComSaldoDisponivelTest() {
 
         int retorno = calcularEstoqueService.calcularEstoque(10, 1, TipoMovimentacao.ENTRADA.getDescricao());
 
@@ -36,7 +35,7 @@ public class CalcularEstoqueServiceTest {
 
     @Test
     @DisplayName("Quando o produto tem estoque disponível suficiente")
-    void calcularEstoqueComSaldoIndisponivel() {
+    void calcularEstoqueComSaldoIndisponivelTest() {
 
         Exception thrown = assertThrows(ValorNumericoInvalidoException.class, () -> calcularEstoqueService.calcularEstoque(10, 11, TipoMovimentacao.SAIDA.getDescricao()));
 
